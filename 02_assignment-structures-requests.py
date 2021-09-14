@@ -27,7 +27,7 @@ def exercise01():
     # Create a list called animals containing the following animals: cat, dog, crouching tiger, hidden dragon, manta ray
 
     # ------ Place code below here \/ \/ \/ ------
-
+    animals=['cat','dog','crouching tiger','hidden dragon','manta ray']
 
     # ------ Place code above here /\ /\ /\ ------
 
@@ -38,7 +38,11 @@ def exercise02():
     # Repeat exercise 1 and loop through and print each item in the animal list by iterating through an index number and using range(). Set the variable len_animals to the length of the animal list.
 
     # ------ Place code below here \/ \/ \/ ------
+    animals = ['cat', 'dog', 'crouching tiger', 'hidden dragon', 'manta ray']
+    len_animals = len(animals)
 
+    for i in range(len(animals)):
+        print(animals[i], end=" ")
 
     # ------ Place code above here /\ /\ /\ ------
 
@@ -55,7 +59,8 @@ def exercise03():
 
     # ------ Place code below here \/ \/ \/ ------
 
-
+    countdown = sorted(countdown, reverse=True)
+    the_fifth_element=countdown[4]
     # ------ Place code above here /\ /\ /\ ------
 
     return countdown, the_fifth_element
@@ -77,8 +82,25 @@ def exercise04(more_temperatures, iot_sensor_points, a, b, c, d, e):
     copy_of_samples = []
 
     # ------ Place code below here \/ \/ \/ ------
+    for value in more_temperatures.tolist():
+        temperatures.append(value)
 
+    for key, value in iot_sensor_points.items():
+        temperatures.append(value)
 
+    temperatures.append(a)
+    temperatures.append(b)
+    temperatures.append(c)
+    temperatures.append(d)
+    temperatures.append(e)
+
+    temperatures = sorted(temperatures, reverse=True)
+
+    samples = temperatures[4::5]
+
+    copy_of_samples = samples.copy()
+
+    samples = sorted(samples)
 
     # ------ Place code above here /\ /\ /\ ------
 
@@ -89,8 +111,11 @@ def exercise05(n):
     # This function will find n factorial using recursion (calling itself) and return the solution. For example exercise05(5) will return 120. No Python functions are to be used.
 
     # ------ Place code below here \/ \/ \/ ------
+        if n == 1:
+            return 1
+        else:
+            return n * exercise05(n - 1)
 
-    pass # Remove this line
 
     # ------ Place code above here /\ /\ /\ ------
 
@@ -100,9 +125,16 @@ def exercise06(n):
 
     # ------ Place code below here \/ \/ \/ ------
 
+         length_n = len(n)
+         sum_n = 0
+         for i in n:
+             sum_n = sum_n + i
 
-    # ------ Place code above here /\ /\ /\ ------
-    return length_n, sum_n, average_n
+         average_n = sum_n / length_n
+         return length_n, sum_n, average_n
+
+
+     # ------ Place code above here /\ /\ /\ ------
 
 
 def exercise07(n):
@@ -110,16 +142,21 @@ def exercise07(n):
 
     # ------ Place code below here \/ \/ \/ ------
 
+        ''' Check if given list contains any duplicates - set does not allow duplicates'''
+        if len(n) == len(set(n)):
+            return False
+        else:
+            return True
+
 
     # ------ Place code above here /\ /\ /\ ------
 
 
 # ------ Place code below here \/ \/ \/ ------
-
-def exercise08(s):
+#def exercise08(s):
     # This function receives a string. The string should be casted to an int and then a float and returns each separately
 
-    return int_s, float_s
+#    return int_s, float_s
 
 # ------ Place code above here /\ /\ /\ ------
 
@@ -128,6 +165,7 @@ def exercise09():
     # In the end, you will have a list called dogs that will have 11 items in it. Each item is a string, each string contains a random URL to a dog pic. The source of one dog pic URL is one r.get call. You will make 11 calls to receive 11 random dog pic URLs.
     dogs = []
     url = 'https://random.dog/woof.json'
+
     dog_media = r.get(url=url)
     print(str(dog_media.content))
     
@@ -145,7 +183,13 @@ def exercise10(sentence):
     reversed = ''
 
     # ------ Place code below here \/ \/ \/ ------
-    
+    for x in sentence:
+        reversed = x + reversed
+
+    return reversed.swapcase().replace(" ", "_")
+
+
+
 
 
     # ------ Place code above here /\ /\ /\ ------
@@ -161,7 +205,7 @@ class TestAssignment2(unittest.TestCase):
         self.assertTrue('cat' in a)
         self.assertTrue('dog' in a)
         self.assertTrue('manta ray' in a)
-    
+
     def test_exercise02(self):
         print('Testing exercise 2')
         a, l = exercise02()
@@ -219,21 +263,20 @@ class TestAssignment2(unittest.TestCase):
         self.assertTrue(exercise07([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == False)
         self.assertTrue(exercise07([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10]) == True)
         self.assertTrue(exercise07([1, 2.00002, 2.00001, 4, 5, 6, 7, 8, 9, 10]) == False)
-    
+
+
     def test_exercise09(self):
         print('Testing exercise 9')
         dogs = exercise09()
         for d in dogs:
             print(d)
         self.assertTrue('https://random.dog/' in d)
-            
+
 
     def test_exercise10(self):
         print('Testing exercise 10')
         self.assertEqual(exercise10('HellO'),'oLLEh')
         self.assertEqual(exercise10('ThIs Is MaD'),'dAm_Si_SiHt')
-
-
 
 
 if __name__ == '__main__':
