@@ -23,7 +23,7 @@ Hint: The HTML in main_page needs a modification in the text input. The modifica
 
 '''
 
-from flask import Flask, request
+from flask import Flask, request, render_template
 import re
 
 main_page = '''
@@ -34,7 +34,8 @@ main_page = '''
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
     </head>
 <body>
-<form class="form-horizontal" method="post" action="/calc">
+<!--<form class="form-horizontal" method="post" action="/calc">-->
+<form class="form-horizontal" method="post" >
 <fieldset>
 
 <!-- Form Name -->
@@ -44,7 +45,7 @@ main_page = '''
 <div class="form-group">
   <label class="col-md-4 control-label" for="textinput">Number</label>  
   <div class="col-md-4">
-  <input id="textinput" type="number" placeholder="Enter a number" class="form-control input-md">
+  <input id="textinput" name="numbertext" pattern="^(-?[1-9]+\\d*([.]\\d+)?)$|^(-?0[.]\\d*[1-9]+)$|^0$" type="number" placeholder="Enter a number" class="form-control input-md">
   </div>
 </div>
 
@@ -52,7 +53,7 @@ main_page = '''
 <div class="form-group">
   <label class="col-md-4 control-label" for="singlebutton"></label>
   <div class="col-md-4">
-    <button id="singlebutton" name="singlebutton" class="btn btn-primary">Calculate</button>
+    <button id="singlebutton" name="singlebutton" class="btn btn-primary" >Calculate</button>
   </div>
 </div>
 
@@ -64,10 +65,26 @@ main_page = '''
 '''
     # ------ Place code below here \/ \/ \/ ------
 
+# Flask constructor
+app = Flask(__name__)
+
+# A decorator used to tell the application
+# which URL is associated function
+
+
+@app.route('/', methods=['GET', 'POST'])
+def calc():
+    if request.method == "POST":
+        input_number = request.form.get("numbertext")
+        mult_result = int(input_number) * 5
+        return"Your calculation is " + str(mult_result)
+
+    return main_page
 
 
 
 
-
+if __name__ == '__main__':
+    app.run()
 
     # ------ Place code above here /\ /\ /\ ------
